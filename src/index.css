@@ -1,0 +1,54 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+:root {
+  --ui-bg: #f4f4f5; --ui-panel: #ffffff; --ui-text: #18181b; --ui-muted: #71717a;
+  --ui-border: #e4e4e7; --ui-accent: #2563eb; --ui-danger: #dc2626;
+}
+:root[data-theme='dark'] {
+  --ui-bg: #09090b; --ui-panel: #18181b; --ui-text: #f4f4f5; --ui-muted: #a1a1aa;
+  --ui-border: #27272a; --ui-accent: #60a5fa; --ui-danger: #f87171;
+}
+
+@theme inline {
+  --color-bg: var(--ui-bg);
+  --color-panel: var(--ui-panel);
+  --color-text: var(--ui-text);
+  --color-muted: var(--ui-muted);
+  --color-border: var(--ui-border);
+  --color-accent: var(--ui-accent);
+  --color-danger: var(--ui-danger);
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
+}
+
+@layer base {
+  body { @apply bg-bg text-text font-sans; font-size: 13px; margin: 0; }
+}
+
+/* ---- residual rules Tailwind can't express (3rd-party DOM / inline-style overrides) ---- */
+
+/* visible resize handles (overrides react-grid-layout's stock stylesheet) */
+.app .react-grid-item > .react-resizable-handle { width: 24px; height: 24px; opacity: 0.35; }
+.app .react-grid-item:hover > .react-resizable-handle { opacity: 1; }
+.app .react-grid-item > .react-resizable-handle::after {
+  width: 7px; height: 7px;
+  border-right: 2px solid var(--ui-muted);
+  border-bottom: 2px solid var(--ui-muted);
+}
+.app .react-grid-item:hover > .react-resizable-handle::after {
+  border-right-color: var(--ui-accent);
+  border-bottom-color: var(--ui-accent);
+}
+
+/* maximize: beats RGL's inline transform/size */
+.app .widget-maximized {
+  position: fixed !important;
+  inset: 44px 0 0 0 !important;
+  width: auto !important;
+  height: auto !important;
+  transform: none !important;
+  z-index: 80;
+}
+.app .widget-maximized .react-resizable-handle { display: none; }

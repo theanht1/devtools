@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DevTools</title>
+    <!-- react-draggable (inside react-grid-layout/legacy) reads process.env.DRAGGABLE_DEBUG at
+         drag start; Vite only replaces the NODE_ENV dot-form, so bare `process` must exist. -->
+    <script>window.process = window.process || { env: {} };</script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
