@@ -24,3 +24,6 @@ dist-ssr
 *.sw?
 
 docs/superpowers
+
+# agent scratch / process artifacts
+.superpowers/

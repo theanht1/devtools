@@ -61,5 +61,14 @@ deleted from the top bar or the command palette.
   deliberate resolution of the conflict in favor of the more common "open
   command palette" shortcut.
 
-The command palette's footer shows this cheatsheet, and the "⌨" button in
-the top bar opens the palette as a quick reminder.
+The command palette's footer shows this cheatsheet.
+
+## Deploying to GitHub Pages
+
+The repo ships with `.github/workflows/deploy.yml`, which builds and publishes `dist/` to GitHub Pages on every push to `main` (tests run first). One-time setup:
+
+1. Create a GitHub repository and push this project to it.
+2. In the repo settings, go to **Settings → Pages** and set **Source** to **GitHub Actions**.
+3. Push to `main` (or run the workflow manually from the Actions tab). The site will be live at `https://<user>.github.io/<repo>/`.
+
+The Vite config uses a relative `base: './'`, so the build works from any sub-path without configuration.
