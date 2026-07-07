@@ -36,14 +36,15 @@ describe('useKeyboardNav', () => {
     expect(useLayoutStore.getState().focusedWidgetId).toBe('b');
   });
 
-  it('plain hjkl is ignored while typing, but Ctrl+l still works', () => {
+  it('plain hjkl is ignored while typing (Esc first, then navigate)', () => {
     setup([{ id: 'a', x: 0, y: 0 }, { id: 'b', x: 4, y: 0 }]);
     const input = document.createElement('input');
     document.body.appendChild(input);
     input.focus();
     fireEvent.keyDown(window, { key: 'l' });
     expect(useLayoutStore.getState().focusedWidgetId).toBe('a');
-    fireEvent.keyDown(window, { key: 'l', ctrlKey: true });
+    fireEvent.keyDown(window, { key: 'Escape' }); // blur -> normal mode
+    fireEvent.keyDown(window, { key: 'l' });
     expect(useLayoutStore.getState().focusedWidgetId).toBe('b');
   });
 
@@ -114,5 +115,38 @@ describe('useKeyboardNav', () => {
     const ev = new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true });
     window.dispatchEvent(ev);
     expect(ev.defaultPrevented).toBe(true);
+  });
+});
+
+describe('round-5 navigation changes', () => {
+  it('arrow keys move focus in normal mode', () => {
+    setup([{ id: 'a', x: 0, y: 0 }, { id: 'b', x: 4, y: 0 }]);
+    fireEvent.keyDown(window, { key: 'ArrowRight' });
+    expect(useLayoutStore.getState().focusedWidgetId).toBe('b');
+    fireEvent.keyDown(window, { key: 'ArrowLeft' });
+    expect(useLayoutStore.getState().focusedWidgetId).toBe('a');
+  });
+
+  it('arrow keys are ignored while typing', () => {
+    setup([{ id: 'a', x: 0, y: 0 }, { id: 'b', x: 4, y: 0 }]);
+    const input = document.createElement('input');
+    document.body.appendChild(input);
+    input.focus();
+    fireEvent.keyDown(window, { key: 'ArrowRight' });
+    expect(useLayoutStore.getState().focusedWidgetId).toBe('a');
+  });
+
+  it('Ctrl+l no longer navigates', () => {
+    setup([{ id: 'a', x: 0, y: 0 }, { id: 'b', x: 4, y: 0 }]);
+    fireEvent.keyDown(window, { key: 'l', ctrlKey: true });
+    expect(useLayoutStore.getState().focusedWidgetId).toBe('a');
+  });
+
+  it('Escape closes the palette even when focus is outside the palette input', () => {
+    setup([{ id: 'a', x: 0, y: 0 }]);
+    useLayoutStore.setState({ paletteOpen: true });
+    // focus is on body (e.g. user clicked the palette footer)
+    fireEvent.keyDown(window, { key: 'Escape' });
+    expect(useLayoutStore.getState().paletteOpen).toBe(false);
   });
 });

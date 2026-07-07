@@ -101,3 +101,10 @@ describe('Delete layout confirmation', () => {
     confirmSpy.mockRestore();
   });
 });
+
+it('has a Report a bug link to the GitHub issues page', () => {
+  render(<TopBar />);
+  const link = screen.getByLabelText('Report a bug') as HTMLAnchorElement;
+  expect(link.href).toBe('https://github.com/theanht1/devtools/issues');
+  expect(link.target).toBe('_blank');
+});

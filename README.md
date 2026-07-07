@@ -1,5 +1,7 @@
 # DevTools
 
+**Live app: [theanht1.github.io/devtools](https://theanht1.github.io/devtools/)**
+
 A single-page, keyboard-driven workbench of small developer utilities. Open any
 combination of tools as widgets on a draggable/resizable grid, arrange them
 into named layouts, and switch between layouts instantly. Everything runs
@@ -49,26 +51,10 @@ deleted from the top bar or the command palette.
 - **/** — also opens the command palette
 - With the grid focused (palette closed), press **Esc** to leave any focused
   input, then:
-  - **h / j / k / l** — move focus between widgets (left/down/up/right)
+  - **h / j / k / l** or **arrow keys** — move focus between widgets
+    (left/down/up/right)
   - **Enter** or **i** — enter the focused widget (focus its first input)
   - **x** — close the focused widget
-- **Ctrl+h / Ctrl+j / Ctrl+l** always move focus between widgets, even while
-  typing inside a widget's input.
-- **Ctrl+k** is the one deliberate exception: since Ctrl+K is also the
-  palette toggle, when the palette is open Ctrl+K/Ctrl+J move the selection
-  up/down within the palette instead of moving grid focus. Outside the
-  palette, Ctrl+K opens the palette rather than moving focus up — this is a
-  deliberate resolution of the conflict in favor of the more common "open
-  command palette" shortcut.
+- Inside the open palette, **Ctrl+j / Ctrl+k** (or ↑/↓) move the selection.
 
 The command palette's footer shows this cheatsheet.
-
-## Deploying to GitHub Pages
-
-The repo ships with `.github/workflows/deploy.yml`, which builds and publishes `dist/` to GitHub Pages on every push to `main` (tests run first). One-time setup:
-
-1. Create a GitHub repository and push this project to it.
-2. In the repo settings, go to **Settings → Pages** and set **Source** to **GitHub Actions**.
-3. Push to `main` (or run the workflow manually from the Actions tab). The site will be live at `https://<user>.github.io/<repo>/`.
-
-The Vite config uses a relative `base: './'`, so the build works from any sub-path without configuration.

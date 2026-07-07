@@ -2,7 +2,16 @@ import { useEffect } from 'react';
 import { useLayoutStore } from '../store/layoutStore';
 import { findNeighbor, type Direction } from '../lib/spatialNav';
 
-const DIR_KEYS: Record<string, Direction> = { h: 'left', j: 'down', k: 'up', l: 'right' };
+const DIR_KEYS: Record<string, Direction> = {
+  h: 'left',
+  j: 'down',
+  k: 'up',
+  l: 'right',
+  ArrowLeft: 'left',
+  ArrowDown: 'down',
+  ArrowUp: 'up',
+  ArrowRight: 'right',
+};
 
 function isEditable(el: Element | null): boolean {
   if (!el) return false;
@@ -48,11 +57,11 @@ export function useKeyboardNav() {
         s.setPaletteOpen(!s.paletteOpen);
         return;
       }
-      if (s.paletteOpen) return; // palette owns all other keys
-
-      if (e.ctrlKey && !e.metaKey && !e.altKey && DIR_KEYS[e.key]) {
-        e.preventDefault();
-        moveFocus(DIR_KEYS[e.key]);
+      if (s.paletteOpen) {
+        // The palette input handles its own keys (and stops propagation), but
+        // when DOM focus is elsewhere (footer click, focus race on open) the
+        // window must still close the palette on Escape.
+        if (e.key === 'Escape') s.setPaletteOpen(false);
         return;
       }
 

@@ -163,7 +163,7 @@ export function CommandPalette() {
           {filtered.length === 0 && <li className="palette-empty text-muted">No matches</li>}
         </ul>
         <div className="palette-footer border-t border-border px-2.5 py-1.5 text-[11px] text-muted">
-          ↑↓/^j ^k navigate · ⏎ run · esc close — grid: esc then h/j/k/l move · i enter · x close · ^hjkl anywhere
+          ↑↓/^j ^k navigate · ⏎ run · esc close — grid: esc then h/j/k/l or arrows move · i enter · x close
         </div>
       </div>
     </div>

@@ -8,6 +8,20 @@
     <!-- react-draggable (inside react-grid-layout/legacy) reads process.env.DRAGGABLE_DEBUG at
          drag start; Vite only replaces the NODE_ENV dot-form, so bare `process` must exist. -->
     <script>window.process = window.process || { env: {} };</script>
+    <!-- Google Analytics (GA4) — skipped on localhost so dev sessions don't pollute the data -->
+    <script>
+      if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+        const s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-VZLY1YN812';
+        document.head.appendChild(s);
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        window.gtag = gtag;
+        gtag('js', new Date());
+        gtag('config', 'G-VZLY1YN812');
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
